@@ -11,7 +11,7 @@ class ReplyController extends Controller
     {
       $this->middleware(['auth']);
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -38,7 +38,7 @@ class ReplyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-     public function store(Thread $thread)
+     public function store($channel, Thread $thread)
      {
          $thread->addReply([
              'body' => request('body'),
