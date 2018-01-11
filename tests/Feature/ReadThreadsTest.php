@@ -30,7 +30,7 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function a_user_browse_a_single_thread()
     {
-      $this->get('/threads' . $this->thread)
+      $this->get($this->thread->path())
           ->assertSee($this->thread->title);
     }
 
