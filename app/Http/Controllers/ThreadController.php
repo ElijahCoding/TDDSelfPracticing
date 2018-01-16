@@ -108,9 +108,16 @@ class ThreadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($channel,Thread $thread)
     {
-        //
+        // $thread->replies()->delete();  check thread static deleting
+        $thread->delete();
+
+        if (request()->wantsJson()) {
+          return response([], 204);
+        }
+
+        return redirect('/threads');
     }
 
     protected function getThreads(Channel $channel, ThreadFilters $filters)
