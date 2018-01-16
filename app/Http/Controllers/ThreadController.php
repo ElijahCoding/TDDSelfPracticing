@@ -110,11 +110,17 @@ class ThreadController extends Controller
      */
     public function destroy($channel,Thread $thread)
     {
+        // if ($thread->user_id != auth()->id()) {
+        //   return redirect('/login');
+        // } Better use Policy
+
+        $this->authorize('update', $thread);
+
         // $thread->replies()->delete();  check thread static deleting
         $thread->delete();
 
         if (request()->wantsJson()) {
-          return response([], 204);
+            return response([], 204);
         }
 
         return redirect('/threads');
