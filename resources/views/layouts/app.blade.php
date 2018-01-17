@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ config('app.locale') }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,30 +13,29 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <!-- Scripts -->
+    <script>
+        window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
+        ]) !!};
+    </script>
+
     <style>
-      body {
-        padding-bottom: 100px;
-      }
-
-      .level {
-        display:flex;
-        align-items: center;
-      }
-
-      .flex {
-        flex: 1;
-      }
+        body { padding-bottom: 100px; }
+        .level { display: flex; align-items: center; }
+        .flex { flex: 1; }
     </style>
 </head>
-<body style="padding-bottom: 10px;">
-    <div id="app">
-      
-        @include('layouts.nav')
+<body>
+<div id="app">
+    @include ('layouts.nav')
 
-        @yield('content')
-    </div>
+    @yield('content')
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <flash message="{{ session('flash') }}"></flash>
+</div>
+
+<!-- Scripts -->
+<script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

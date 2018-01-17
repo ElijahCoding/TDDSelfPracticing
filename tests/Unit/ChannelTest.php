@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -8,9 +8,9 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 class ChannelTest extends TestCase
 {
     use DatabaseMigrations;
-
+    
     /** @test */
-    public function a_channel_has_many_tests()
+    public function a_channel_consists_of_threads()
     {
         $channel = create('App\Channel');
         $thread = create('App\Thread', ['channel_id' => $channel->id]);

@@ -2,50 +2,47 @@
 
 namespace Tests\Feature;
 
-use Exception;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class FavoritesTest extends TestCase
 {
     use DatabaseMigrations;
 
     /** @test */
-    public function guests_can_not_favorite_anything()
+    function guests_can_not_favorite_anything()
     {
-      $reply = create('App\Reply');
-
-      $this->withExceptionHandling()->post('replies/' . $reply->id . '/favorites')
-          ->assertRedirect('/login');
-
+        $this->withExceptionHandling()
+            ->post('replies/1/favorites')
+            ->assertRedirect('/login');
     }
 
     /** @test */
     public function an_authenticated_user_can_favorite_any_reply()
     {
-      $this->signIn();
+        $this->signIn();
 
-      $reply = create('App\Reply');
+        $reply = create('App\Reply');
 
-      $this->post('replies/' . $reply->id . '/favorites');
+        $this->post('replies/' . $reply->id . '/favorites');
 
-      $this->assertCount(1, $reply->favorites);
+        $this->assertCount(1, $reply->favorites);
     }
 
     /** @test */
-    public function an_authenticated_user_can_only_favorite_a_reply_once()
+    function an_authenticated_user_may_only_favorite_a_reply_once()
     {
-      $this->signIn();
+        $this->signIn();
 
-      $reply = create('App\Reply');
+        $reply = create('App\Reply');
 
-      try {
-        $this->post('replies/' . $reply->id . '/favorites');
-        $this->post('replies/' . $reply->id . '/favorites');
-      } catch (Exception $e) {
-        $this->fail('Did not expect to insert the same record set twice.');
-      }
+        try {
+            $this->post('replies/' . $reply->id . '/favorites');
+            $this->post('replies/' . $reply->id . '/favorites');
+        } catch (\Exception $e) {
+            $this->fail('Did not expect to insert the same record set twice.');
+        }
 
-      $this->assertCount(1, $reply->favorites);
+        $this->assertCount(1, $reply->favorites);
     }
 }
