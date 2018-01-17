@@ -2,10 +2,14 @@
 
 namespace App;
 
+use App\Activity;
+use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
+    use RecordsActivity;
+
     protected $guarded = [];
 
     protected $with = ['creator', 'channel'];
@@ -22,6 +26,11 @@ class Thread extends Model
       static::deleting(function($thread) {
         $thread->replies()->delete();
       });
+
+      // static::created(function($thread) {
+      //   $thread->recordActivity('created');
+      // }); check RecordsActivity Trait
+
       // static::addGlobalScope('creator', function($builder) {
       //   $builder->with('creator');
       // });  Like protected $with = ['creator']
