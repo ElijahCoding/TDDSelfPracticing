@@ -18,5 +18,12 @@ class ReplyTest extends TestCase
         $this->assertInstanceOf('App\User', $reply->owner);
     }
 
-    
+    /** @test */
+    public function it_belongs_to_a_thread()
+    {
+      $thread = create('App\Thread');
+      $reply = create('App\Reply', ['thread_id' => $thread->id]);
+
+      $this->assertInstanceOf('App\Thread', $reply->thread);
+    }
 }
