@@ -32,7 +32,7 @@
 
     @yield('content')
 
-    <flash message="{{ session('flash') }}"></flash>
+    <flash message="{{session('flash')}}"></flash>
 </div>
 
 <!-- Scripts -->
