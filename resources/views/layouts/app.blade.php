@@ -27,6 +27,9 @@
         .mr-1 {
           margin-right: 1em;
         }
+        [v-cload] {
+          display: none;
+        }
     </style>
 </head>
 <body>
