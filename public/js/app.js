@@ -43366,15 +43366,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['reply'],
+
   data: function data() {
     return {
-      favoritesCount: 10
+      favoritesCount: this.reply.favoritesCount,
+      isFavorited: false
     };
   },
 
 
+  computed: {
+    classes: function classes() {
+      return ['btn', this.isFavorited ? 'btn-primary' : 'btn btn-default'];
+    }
+  },
+
   methods: {
-    toggle: function toggle() {}
+    toggle: function toggle() {
+      if (this.isFavorited) {
+        axios.delete('/replies/' + this.reply.id + '/favorites');
+      } else {
+        axios.post('/replies/' + this.reply.id + '/favorites');
+
+        this.isFavorited = true;
+        this.favoritesCount++;
+      }
+    }
   }
 });
 
@@ -43384,7 +43402,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('button', {
-    staticClass: "btn btn-default",
+    class: _vm.classes,
     attrs: {
       "type": "submit"
     },
