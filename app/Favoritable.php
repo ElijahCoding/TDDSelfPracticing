@@ -48,6 +48,16 @@ trait Favoritable
     }
 
     /**
+     * Fetch the favorited status as a property.
+     *
+     * @return bool
+     */
+    public function getIsFavoritedAttribute()
+    {
+        return $this->isFavorited();
+    }
+
+    /**
      * Get the number of favorites for the reply.
      *
      * @return integer
@@ -56,4 +66,6 @@ trait Favoritable
     {
         return $this->favorites->count();
     }
+
+
 }
